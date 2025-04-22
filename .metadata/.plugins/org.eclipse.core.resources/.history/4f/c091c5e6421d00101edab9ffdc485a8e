@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .profile-card { border: 1px solid #ddd; padding: 20px; width: 300px; border-radius: 8px; background-color: #f9f9f9; }
+        .profile-card h3 { margin-top: 0; }
+        a.button { padding: 6px 12px; background-color: #FFC107; color: black; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h2>Admin Profile</h2>
+    <div class="profile-card">
+        <h3>Isha Karki</h3>
+        <p><strong>Email:</strong> isha@example.com</p>
+        <p><strong>Role:</strong> Admin</p>
+        <a href="#" class="button">Edit Profile</a>
+        <a href="LogoutServlet" class="button" style="background-color: #f44336; color: white;">Logout</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>About Us - DoTask</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f8fb;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 20px;
+            text-align: center;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 60px;
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-container {
+            max-width: 1100px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin-top: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .about-container .section-title {
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .about-container p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .about-container ul {
+            list-style-type: none;
+            padding-left: 0;
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .about-container ul li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .about-container ul li::before {
+            content: '\2022';
+            color: #007bff;
+            font-size: 28px;
+            position: absolute;
+            left: -30px;
+            top: 2px;
+        }
+
+        .cta {
+            background-color: #007bff;
+            padding: 40px;
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta h3 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .cta a {
+            text-decoration: none;
+            background-color: #fff;
+            color: #007bff;
+            padding: 15px 35px;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .cta a:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        footer {
+            font-size: 14px;
+            color: #555;
+            margin-top: 60px;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            .about-container {
+                padding: 20px;
+            }
+
+            .about-container .section-title {
+                font-size: 30px;
+            }
+
+            .about-container ul li {
+                font-size: 16px;
+            }
+
+            .cta h3 {
+                font-size: 24px;
+            }
+
+            .cta p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>About Us</h1>
+    
+    <div class="about-container">
+        <div>
+            <h2 class="section-title">Who We Are</h2>
+            <p>DoTask is a leading task management platform designed to simplify the way individuals and teams handle their work. By providing a clear, easy-to-use interface, we aim to boost productivity and foster collaboration. Whether you are managing personal tasks or working with a team, DoTask ensures your goals are organized and your progress is always on track.</p>
+        </div>
+
+        <div>
+            <h2 class="section-title">Our Mission</h2>
+            <p>Our mission is to help individuals and teams reach their full potential by offering a platform that combines simplicity with powerful features. We believe that with the right tools, anyone can stay on top of their work, meet deadlines, and achieve their goals with ease. DoTask is built to be your productivity partner every step of the way.</p>
+        </div>
+
+        <div>
+            <h2 class="section-title">Our Core Values</h2>
+            <ul>
+                <li><strong>Efficiency:</strong> We focus on maximizing productivity by simplifying task management, helping you achieve more in less time.</li>
+                <li><strong>Collaboration:</strong> Our platform fosters seamless teamwork by allowing easy information sharing and project coordination.</li>
+                <li><strong>Transparency:</strong> We provide clear, actionable insights to help you make informed decisions and track your progress.</li>
+                <li><strong>Innovation:</strong> We continuously evolve our platform to meet the ever-changing needs of our users, ensuring we stay ahead of the curve.</li>
+            </ul>
+        </div>
+
+        <div class="cta">
+            <h3>Join the DoTask Community</h3>
+            <p>Ready to supercharge your productivity and transform the way you manage tasks? Join the thousands of people already benefiting from DoTask!</p>
+            <a href="register.jsp">Get Started Now</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All Rights Reserved. | <a href="about-us.jsp">About Us</a> | <a href="contact-us.jsp">Contact Us</a></p>
+    </footer>
+</body>
+</html>

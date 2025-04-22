@@ -1,0 +1,67 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import model.User;
+import util.DBUtil;
+
+public class UserDAO {
+
+    // Register a new user
+    public boolean registerUser(String userName, String email, String password, String phoneNo, int roleID) {
+        boolean success = false;
+
+        String sql = "INSERT INTO user (UserName, Email, Password, PhoneNo, RoleID) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, userName);
+            stmt.setString(2, email);
+            stmt.setString(3, password); // Simple for now, no encryption
+            stmt.setString(4, phoneNo);
+            stmt.setInt(5, roleID);
+
+            int rows = stmt.executeUpdate();
+            success = rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    // Validate login
+    public User validateLogin(String email, String password) {
+        User user = null;
+
+        String sql = "SELECT * FROM user WHERE Email = ? AND Password = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setUserID(rs.getInt("UserID"));
+                user.setUserName(rs.getString("UserName"));
+                user.setEmail(rs.getString("Email"));
+                user.setPhoneNo(rs.getString("PhoneNo"));
+                user.setRoleID(rs.getInt("RoleID"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+}

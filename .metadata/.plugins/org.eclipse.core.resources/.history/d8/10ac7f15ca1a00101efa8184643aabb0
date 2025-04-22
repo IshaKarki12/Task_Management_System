@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Task Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        nav {
+            margin: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #ccc;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Task Management System</h1>
+    </header>
+
+    <!-- Check if user is logged in -->
+    <c:if test="${empty sessionScope.email}">
+        <script>
+            window.location.href = "view/login.jsp";  // Redirect to login if not logged in
+        </script>
+    </c:if>
+
+    <!-- Welcome message -->
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Welcome, <c:out value="${sessionScope.email}"/>!</h2>
+        <p>What would you like to do next?</p>
+    </div>
+
+    <!-- Navigation links -->
+    <nav style="text-align: center;">
+        <a href="view/dashboard.jsp">Go to Dashboard</a>
+        <a href="view/profile.jsp">View/Edit Profile</a>
+        <a href="view/taskManagement.jsp">Manage Tasks</a>
+        <a href="LogoutServlet">Logout</a>
+    </nav>
+
+    <footer>
+        <p>&copy; 2025 Task Management System</p>
+    </footer>
+</body>
+</html>

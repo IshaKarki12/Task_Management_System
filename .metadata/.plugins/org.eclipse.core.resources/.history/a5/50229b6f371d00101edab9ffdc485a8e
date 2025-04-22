@@ -1,0 +1,158 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #0056b3, #00aaff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        li a {
+            background-color: #ffffff;
+            color: #0056b3;
+            font-size: 18px;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li a:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .task-section {
+            background: #fff;
+            color: #000;
+            padding: 30px;
+            margin: 30px auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            color: #00aaff;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <ul>
+        <li><a href="my-tasks.jsp">My Tasks</a></li>
+        <li><a href="create-task.jsp">Create Task</a></li>
+        <li><a href="../LogoutServlet">Logout</a></li>
+    </ul>
+
+    <div class="task-section">
+        <h3>My Tasks by Category</h3>
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect">
+            <option value="all">All Categories</option>
+            <option value="work">Work</option>
+            <option value="study">Study</option>
+            <option value="personal">Personal</option>
+            <!-- You will dynamically generate these from backend later -->
+        </select>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sample Task 1</td>
+                    <td>Complete the Java assignment</td>
+                    <td>Pending</td>
+                    <td>2025-04-22</td>
+                </tr>
+                <tr>
+                    <td>Sample Task 2</td>
+                    <td>Study for DBMS quiz</td>
+                    <td>In Progress</td>
+                    <td>2025-04-25</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All rights reserved. | <a href="privacy-policy.jsp">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

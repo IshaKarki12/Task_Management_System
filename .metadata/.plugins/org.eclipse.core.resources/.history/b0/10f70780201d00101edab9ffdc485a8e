@@ -1,0 +1,169 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Your Account</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Roboto',sans-serif;
+      background-color:#f4f5f7;
+      display:flex; align-items:center; justify-content:center;
+      min-height:100vh; padding:20px;
+    }
+
+    /* Card container */
+    .card {
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.08);
+      width:100%; max-width:480px;
+      overflow:hidden;
+    }
+
+    /* Header: logo + login link */
+    .card-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px;
+      border-bottom:1px solid #eee;
+    }
+    .card-header .logo {
+      display:flex; align-items:center;
+    }
+    .card-header .logo img {
+      height:50px; margin-right:10px;
+    }
+    .card-header .logo span {
+      font-size:24px; font-weight:700; color:#333;
+    }
+    .card-header .login-link a {
+      font-size:14px; color:#007bff; text-decoration:none; font-weight:500;
+    }
+    .card-header .login-link a:hover { text-decoration:underline; }
+
+    /* Body: registration form */
+    .card-body {
+      padding:25px 20px;
+    }
+    .card-body h2 {
+      font-size:22px; font-weight:700; color:#222;
+      margin-bottom:18px; text-align:center;
+    }
+    .form-group { margin-bottom:15px; }
+    .form-group label {
+      display:block; font-size:13px; color:#444; font-weight:500;
+      margin-bottom:6px;
+    }
+    .form-group input,
+    .form-group select {
+      width:100%; padding:10px 14px; font-size:14px;
+      color:#333; border:1px solid #ccc; border-radius:5px;
+      background:#f9f9f9; transition:border-color .3s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color:#007bff; background:#fff; outline:none;
+    }
+    .form-group input[type="submit"] {
+      background:#007bff; color:#fff; font-size:15px;
+      padding:12px; border:none; border-radius:5px;
+      cursor:pointer; transition:background .3s;
+      width:100%;
+    }
+    .form-group input[type="submit"]:hover {
+      background:#0056b3;
+    }
+    .error-message {
+      color:#e74c3c; font-size:13px;
+      margin-bottom:15px; text-align:left;
+    }
+
+    /* Footer: bottom link */
+    .card-footer {
+      padding:15px; background:#f9f9f9; text-align:center;
+      border-top:1px solid #eee;
+    }
+    .card-footer a {
+      font-size:14px; color:#007bff; text-decoration:none;
+    }
+    .card-footer a:hover { text-decoration:underline; }
+
+    @media screen and (max-width:480px) {
+      .card-header, .card-body, .card-footer { padding:15px; }
+      .card-header .logo img { height:40px; }
+      .card-header .logo span { font-size:20px; }
+      .card-body h2 { font-size:20px; }
+      .card-footer a { font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="logo">
+        <img src="${pageContext.request.contextPath}/assets/completed-task.png" alt="DoTask Logo">
+        <span>DoTask</span>
+      </div>
+      <div class="login-link">
+        <a href="login.jsp">Already have an account? Log in</a>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+      <h2>Create Your Account</h2>
+
+      <% String error = (String) request.getAttribute("error");
+         if (error != null) { %>
+        <div class="error-message"><%= error %></div>
+      <% } %>
+
+      <form action="../RegisterServlet" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="userName">Username</label>
+          <input type="text" name="userName" required placeholder="Choose a username">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" required placeholder="Your email address">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" required placeholder="Create a password">
+        </div>
+        <div class="form-group">
+          <label for="phoneNo">Phone Number</label>
+          <input type="text" name="phoneNo" pattern="[0-9]{10}" required placeholder="10-digit number">
+        </div>
+        <div class="form-group">
+          <label for="roleID">Role</label>
+          <select name="roleID" required>
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="profileImage">Upload Profile Image</label>
+          <input type="file" name="profileImage" accept="image/*">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Register">
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <a href="${pageContext.request.contextPath}/view/login.jsp">Back to Login</a>
+    </div>
+  </div>
+
+</body>
+</html>

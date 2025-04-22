@@ -1,0 +1,215 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Basic styling for page */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #0056b3, #00aaff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        li a {
+            background-color: #ffffff;
+            color: #0056b3;
+            font-size: 18px;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li a:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .task-section {
+            background: #fff;
+            color: #000;
+            padding: 30px;
+            margin: 30px auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            color: #00aaff;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <ul>
+        <li><a href="my-tasks.jsp">My Tasks</a></li>
+        <li><a href="create-task.jsp">Create Task</a></li>
+        <li><a href="../LogoutServlet">Logout</a></li>
+    </ul>
+
+    <div class="task-section">
+        <h3>Select Category to View Tasks</h3>
+        
+        <!-- Category Dropdown -->
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect" onchange="loadTasksByCategory()">
+            <option value="all">All Categories</option>
+            <option value="work">Work</option>
+            <option value="study">Study</option>
+            <option value="personal">Personal</option>
+            <!-- Categories should be dynamically generated from the backend -->
+        </select>
+
+        <!-- Tasks will be displayed here based on category selected -->
+        <div class="task-list" id="taskList" style="display:none;">
+            <h3>Tasks in Selected Category</h3>
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Placeholder for tasks -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All rights reserved. | <a href="privacy-policy.jsp">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Example function to load tasks based on selected category
+        function loadTasksByCategory() {
+            const category = document.getElementById('categorySelect').value;
+            const taskListDiv = document.getElementById('taskList');
+            const tableBody = document.getElementById('taskTable').getElementsByTagName('tbody')[0];
+
+            // Placeholder task data for different categories
+            const tasks = {
+                work: [
+                    {name: 'Work Task 1', description: 'Complete project report', status: 'Pending', dueDate: '2025-04-22'},
+                    {name: 'Work Task 2', description: 'Attend meeting', status: 'In Progress', dueDate: '2025-04-23'}
+                ],
+                study: [
+                    {name: 'Study Task 1', description: 'Study for exam', status: 'Completed', dueDate: '2025-04-24'},
+                    {name: 'Study Task 2', description: 'Read chapter 5', status: 'Pending', dueDate: '2025-04-25'}
+                ],
+                personal: [
+                    {name: 'Personal Task 1', description: 'Buy groceries', status: 'Pending', dueDate: '2025-04-21'},
+                    {name: 'Personal Task 2', description: 'Clean the house', status: 'In Progress', dueDate: '2025-04-23'}
+                ]
+            };
+
+            // Clear any existing tasks in table
+            tableBody.innerHTML = '';
+
+            // Filter tasks based on category
+            let filteredTasks = [];
+            if (category === 'all') {
+                filteredTasks = [...tasks.work, ...tasks.study, ...tasks.personal];
+            } else {
+                filteredTasks = tasks[category] || [];
+            }
+
+            // Show task list if there are tasks to display
+            if (filteredTasks.length > 0) {
+                taskListDiv.style.display = 'block';
+            } else {
+                taskListDiv.style.display = 'none';
+            }
+
+            // Add tasks to table
+            filteredTasks.forEach(task => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${task.name}</td>
+                    <td>${task.description}</td>
+                    <td>${task.status}</td>
+                    <td>${task.dueDate}</td>
+                `;
+            });
+        }
+
+        // Load tasks when the page first loads (optional)
+        window.onload = loadTasksByCategory;
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<%@ page import="model.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Profile</title>
+    <style>
+        /* Add some basic styles for the profile page */
+    </style>
+</head>
+<body>
+    <%-- Fetch the current logged-in user from the session --%>
+    <%
+        User u = (User) session.getAttribute("currentUser");
+        if (u == null) {
+            response.sendRedirect("login.jsp");
+            return; // Prevent rendering the page if no user is logged in
+        }
+    %>
+
+    <h1>Admin Profile</h1>
+    <p><strong>Name:</strong> <%= u.getFirstName() + " " + u.getLastName() %></p>
+    <p><strong>Username:</strong> <%= u.getUserName() %></p>
+    <p><strong>Email:</strong> <%= u.getEmail() %></p>
+    <p><strong>Phone:</strong> <%= u.getPhone() %></p>
+    <%-- If you have a profile image in your User object, you can display it here --%>
+    <p><strong>Profile Image:</strong></p>
+    <%
+        if (u.getProfileImage() != null) {
+    %>
+        <img src="data:image/jpeg;base64,<%= new String(Base64.getEncoder().encode(u.getProfileImage())) %>" alt="Profile Image" />
+    <%
+        } else {
+            out.print("No profile image available");
+        }
+    %>
+
+    <a href="admin-dashboard.jsp">Back to Dashboard</a>
+</body>
+</html>

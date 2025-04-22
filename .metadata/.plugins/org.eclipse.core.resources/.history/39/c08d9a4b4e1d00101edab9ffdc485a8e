@@ -1,0 +1,251 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 30px;
+            color: #fff;
+        }
+
+        .navbar {
+            background-color: #333;
+            width: 100%;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #444;
+            transform: translateY(-3px);
+        }
+
+        .dashboard-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 90%;
+            margin-top: 50px;
+            gap: 50px;
+        }
+
+        .profile-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #333;
+        }
+
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .profile-card h3 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .profile-card p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .task-section {
+            background-color: #fff;
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .task-section h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2575fc;
+            color: white;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="my-tasks.jsp">My Tasks</a>
+        <a href="create-task.jsp">Create Task</a>
+        <a href="../LogoutServlet">Logout</a>
+    </div>
+
+    <h2>User Dashboard</h2>
+
+    <div class="dashboard-container">
+        <!-- User Profile Section -->
+        <div class="profile-card">
+            <img src="<%= user.getProfileImage() %>" alt="Profile Image" />
+            <h3><%= user.getFirstName() %> <%= user.getLastName() %></h3>
+            <p>Email: <%= user.getEmail() %></p>
+            <p>Phone: <%= user.getPhone() %></p>
+        </div>
+
+        <!-- Task Section -->
+        <div class="task-section">
+            <h3>Select Category to View Tasks</h3>
+
+            <!-- Category Dropdown -->
+            <label for="categorySelect">Select Category:</label>
+            <select id="categorySelect" onchange="loadTasksByCategory()">
+                <option value="all">All Categories</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="urgent">Urgent</option>
+                <option value="study">Study</option>
+            </select>
+
+            <!-- Tasks will be displayed here based on category selected -->
+            <div class="task-list" id="taskList">
+                <table id="taskTable">
+                    <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Placeholder for tasks -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All rights reserved. | <a href="privacy-policy.jsp">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        function loadTasksByCategory() {
+            const category = document.getElementById('categorySelect').value;
+
+            const tasks = {
+                work: [
+                    {name: 'Work Task 1', description: 'Complete project report', status: 'Pending', dueDate: '2025-04-22'},
+                    {name: 'Work Task 2', description: 'Attend meeting', status: 'In Progress', dueDate: '2025-04-23'}
+                ],
+                study: [
+                    {name: 'Study Task 1', description: 'Study for exam', status: 'Completed', dueDate: '2025-04-24'},
+                    {name: 'Study Task 2', description: 'Read chapter 5', status: 'Pending', dueDate: '2025-04-25'}
+                ],
+                personal: [
+                    {name: 'Personal Task 1', description: 'Buy groceries', status: 'Pending', dueDate: '2025-04-21'},
+                    {name: 'Personal Task 2', description: 'Clean the house', status: 'In Progress', dueDate: '2025-04-23'}
+                ]
+            };
+
+            const tableBody = document.getElementById('taskTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+
+            let filteredTasks = [];
+            if (category === 'all') {
+                filteredTasks = [...tasks.work, ...tasks.study, ...tasks.personal];
+            } else {
+                filteredTasks = tasks[category] || [];
+            }
+
+            filteredTasks.forEach(task => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${task.name}</td>
+                    <td>${task.description}</td>
+                    <td>${task.status}</td>
+                    <td>${task.dueDate}</td>
+                `;
+            });
+        }
+
+        window.onload = loadTasksByCategory;
+    </script>
+
+</body>
+</html>

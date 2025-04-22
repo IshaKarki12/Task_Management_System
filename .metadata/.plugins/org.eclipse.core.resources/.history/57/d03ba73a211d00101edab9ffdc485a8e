@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Your Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Roboto',sans-serif;
+      height:100vh;
+      display:flex;
+      overflow:hidden;
+    }
+
+    /* ─── LEFT BRAND PANEL ───────────────────────────────── */
+    .side-panel {
+      flex:1;
+      background: linear-gradient(135deg,#4a90e2,#357ab7);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:40px;
+      text-align:center;
+    }
+    .side-panel img {
+      height:80px;
+      margin-bottom:20px;
+    }
+    .side-panel h1 {
+      font-size:32px; font-weight:700; margin-bottom:10px;
+    }
+    .side-panel p {
+      font-size:18px; line-height:1.4;
+    }
+
+    /* ─── RIGHT FORM PANEL ──────────────────────────────── */
+    .form-panel {
+      flex:1;
+      overflow-y:auto; /* makes only this panel scroll */
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      background:#f4f5f7;
+      padding:40px 20px;
+    }
+    .form-container {
+      background:#fff;
+      width:100%; max-width:420px;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.08);
+      padding:30px;
+    }
+    .form-container h2 {
+      font-size:22px; font-weight:700; color:#222;
+      margin-bottom:20px; text-align:center;
+    }
+    .form-group { margin-bottom:15px; text-align:left; }
+    .form-group label {
+      display:block; font-size:13px; color:#444; font-weight:500;
+      margin-bottom:6px;
+    }
+    .form-group input,
+    .form-group select {
+      width:100%; padding:10px 14px; font-size:14px;
+      border:1px solid #ccc; border-radius:5px;
+      background:#f9f9f9; transition:border-color .3s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color:#007bff; background:#fff; outline:none;
+    }
+    .form-group input[type="submit"] {
+      width:100%; padding:12px; font-size:15px;
+      background:#007bff; color:#fff; border:none; border-radius:5px;
+      cursor:pointer; transition:background .3s;
+    }
+    .form-group input[type="submit"]:hover {
+      background:#0056b3;
+    }
+    .error-message {
+      color:#e74c3c; font-size:13px; margin-bottom:15px;
+    }
+    .bottom-link {
+      text-align:center; margin-top:20px; font-size:13px;
+    }
+    .bottom-link a {
+      color:#007bff; text-decoration:none;
+    }
+    .bottom-link a:hover { text-decoration:underline; }
+
+    @media(max-width:768px){
+      body { flex-direction:column; }
+      .side-panel, .form-panel { flex:unset; width:100%; height:50vh; }
+      .form-panel { align-items:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT static brand panel -->
+  <div class="side-panel">
+    <img src="${pageContext.request.contextPath}/assets/completed-task.png" alt="DoTask Logo">
+    <h1>DoTask</h1>
+    <p>Organize. Prioritize.<br>Succeed.</p>
+  </div>
+
+  <!-- RIGHT scrollable form panel -->
+  <div class="form-panel">
+    <div class="form-container">
+      <h2>Create Your Account</h2>
+
+      <% String error = (String) request.getAttribute("error");
+         if (error != null) { %>
+        <div class="error-message"><%= error %></div>
+      <% } %>
+
+      <form action="../RegisterServlet" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="userName">Username</label>
+          <input type="text" name="userName" required placeholder="Choose a username">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" required placeholder="Your email address">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" required placeholder="Create a password">
+        </div>
+        <div class="form-group">
+          <label for="phoneNo">Phone Number</label>
+          <input type="text" name="phoneNo" pattern="[0-9]{10}" required placeholder="Enter a 10‑digit number">
+        </div>
+        <div class="form-group">
+          <label for="roleID">Role</label>
+          <select name="roleID" required>
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="profileImage">Upload Profile Image</label>
+          <input type="file" name="profileImage" accept="image/*">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Register">
+        </div>
+      </form>
+
+      <div class="bottom-link">
+        Already have an account? <a href="${pageContext.request.contextPath}/view/login.jsp">Login here</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

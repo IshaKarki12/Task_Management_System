@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Redirect to dashboard if already logged in
+    if (session.getAttribute("currentUser") != null) {
+        response.sendRedirect("dashboard.jsp");
+        return;
+    }
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            color: #0056b3;
+            text-align: center;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="email"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #004a99;
+        }
+    </style>
+</head>
+</head>
+<body>
+    <h2>Login</h2>
+
+    <% 
+        String error = (String) request.getAttribute("error");
+        if (error != null) {
+    %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
+<form action="../LoginServlet" method="post">
+    <label for="email">Email:</label><br>
+    <input type="email" name="email" value="<%= request.getAttribute("rememberedEmail") != null ? request.getAttribute("rememberedEmail") : "" %>" required><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" name="password" value="<%= request.getAttribute("rememberedPassword") != null ? request.getAttribute("rememberedPassword") : "" %>" required><br><br>
+
+    <input type="checkbox" name="remember" <%= request.getAttribute("rememberedEmail") != null ? "checked" : "" %>> Remember Me<br><br>
+
+    <input type="submit" value="Login">
+</form>
+
+    <p>Don't have an account? <a href="register.jsp">Register here</a></p>
+</body>
+</html>

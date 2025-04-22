@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>About Us - DoTask</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f8fb;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #333;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .about-container {
+            max-width: 1100px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .about-container h2 {
+            font-size: 32px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .about-container p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .about-container ul {
+            list-style-type: none;
+            padding-left: 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .about-container ul li {
+            margin-bottom: 15px;
+        }
+
+        footer {
+            font-size: 14px;
+            color: #555;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+
+            .about-container {
+                padding: 20px;
+            }
+
+            .about-container h2 {
+                font-size: 28px;
+            }
+
+            .about-container ul li {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>About Us</h1>
+    
+    <div class="about-container">
+        <h2>Who We Are</h2>
+        <p>DoTask is a powerful task management platform designed to help individuals and teams streamline their work, stay organized, and maximize productivity. We aim to provide a simple yet effective solution for organizing tasks and boosting efficiency.</p>
+
+        <h2>Our Mission</h2>
+        <p>Our mission is to empower individuals and teams by providing an intuitive, easy-to-use platform for managing tasks, tracking progress, and achieving goals. DoTask is built to help you stay on top of your responsibilities and enhance your productivity.</p>
+
+        <h2>Our Values</h2>
+        <ul>
+            <li><strong>Efficiency:</strong> We focus on helping users accomplish more in less time.</li>
+            <li><strong>Collaboration:</strong> We believe in the power of teamwork and making collaboration easy.</li>
+            <li><strong>Transparency:</strong> We provide clear, organized, and actionable insights.</li>
+            <li><strong>Innovation:</strong> We are constantly evolving to meet the changing needs of our users.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All Rights Reserved. | <a href="about-us.jsp">About Us</a> | <a href="contact-us.jsp">Contact Us</a></p>
+    </footer>
+</body>
+</html>

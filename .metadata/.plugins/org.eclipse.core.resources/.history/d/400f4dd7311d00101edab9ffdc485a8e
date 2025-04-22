@@ -1,0 +1,195 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f5f7;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0056b3;
+        }
+
+        /* Profile badge and dropdown */
+        .profile-badge {
+            display: flex;
+            align-items: center;
+            background-color: #0056b3;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-badge:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 100;
+        }
+
+        .dropdown-menu a {
+            text-decoration: none;
+            color: #0056b3;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f4f5f7;
+        }
+
+        /* Main content styling */
+        main {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            font-size: 28px;
+            color: #0056b3;
+            margin-bottom: 30px;
+        }
+        .card-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 260px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        .card a {
+            text-decoration: none;
+            color: #0056b3;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="${pageContext.request.contextPath}/assets/completed-task.png" alt="DoTask Logo">
+            <span>DoTask</span>
+        </div>
+        <div class="profile-badge">
+            <!-- Extracting the first letter of the admin name -->
+            <c:set var="firstLetter" value="${sessionScope.currentUser.firstName[0]}" />
+            <span>${firstLetter}</span>
+
+            <!-- Profile Dropdown Menu -->
+            <div class="dropdown-menu">
+                <a href="admin-profile.jsp">View Profile</a>
+                <a href="../LogoutServlet">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h2>Admin Dashboard</h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="manage-users.jsp">Manage Users</a>
+            </div>
+            <div class="card">
+                <a href="manage-tasks.jsp">Manage Tasks</a>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 DoTask. All rights reserved.
+    </footer>
+
+</body>
+</html>

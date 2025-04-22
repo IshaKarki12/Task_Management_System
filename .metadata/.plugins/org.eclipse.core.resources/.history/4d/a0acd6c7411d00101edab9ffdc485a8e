@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Tasks</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a.button { padding: 6px 12px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h2>Manage Tasks</h2>
+    <a href="#" class="button">Add New Task</a>
+    <br><br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>Design UI</td>
+            <td>Create wireframe for user dashboard</td>
+            <td>2025-04-30</td>
+            <td>In Progress</td>
+            <td>
+                <a href="#" class="button">Edit</a>
+                <a href="#" class="button" style="background-color: #f44336;">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

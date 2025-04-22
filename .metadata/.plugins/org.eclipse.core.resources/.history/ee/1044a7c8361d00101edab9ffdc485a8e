@@ -1,0 +1,110 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.TaskCategory, java.util.List" %>
+<%
+    TaskCategory category = (TaskCategory) request.getAttribute("category"); // for edit
+    List<TaskCategory> categoryList = (List<TaskCategory>) request.getAttribute("categoryList"); // for list
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Task Categories</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #0056b3;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        table {
+            width: 60%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+        a.btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+        .edit {
+            background-color: #28a745;
+        }
+        .delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h2><%= category != null ? "Edit Category" : "Add New Category" %></h2>
+
+    <form action="CategoryServlet" method="post">
+        <input type="hidden" name="action" value="<%= category != null ? "update" : "add" %>">
+        <input type="hidden" name="categoryId" value="<%= category != null ? category.getCategoryID() : "" %>">
+        <input type="text" name="categoryName" placeholder="Enter category name" required value="<%= category != null ? category.getCategoryName() : "" %>">
+        <input type="submit" value="<%= category != null ? "Update" : "Add" %> Category">
+    </form>
+
+    <h2>All Categories</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Category Name</th>
+            <th>Actions</th>
+        </tr>
+        <%
+            if (categoryList != null && !categoryList.isEmpty()) {
+                for (TaskCategory c : categoryList) {
+        %>
+        <tr>
+            <td><%= c.getCategoryID() %></td>
+            <td><%= c.getCategoryName() %></td>
+            <td>
+                <a href="CategoryServlet?action=editForm&categoryId=<%= c.getCategoryID() %>" class="btn edit">Edit</a>
+                <a href="CategoryServlet?action=delete&categoryId=<%= c.getCategoryID() %>" class="btn delete" onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+        </tr>
+        <%      }
+            } else {
+        %>
+        <tr><td colspan="3">No categories available.</td></tr>
+        <% } %>
+    </table>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        h2 {
+            color: #0056b3;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        li {
+            display: inline;
+            margin: 0 15px;
+        }
+        li a {
+            color: #0056b3;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <ul>
+        <li><a href="my-tasks.jsp">My Tasks</a></li>
+        <li><a href="create-task.jsp">Create Task</a></li>
+        <li><a href="../LogoutServlet">Logout</a></li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,29 @@
+package dao;
+
+import model.TaskCategory;
+import util.DBUtil;
+
+import java.sql.*;
+
+public class TaskCategoryDAO {
+
+    // Get all Task Categories
+    public TaskCategory getCategoryById(int categoryID) {
+        TaskCategory category = null;
+        try (Connection connection = DBUtil.getConnection()) {
+            String sql = "SELECT * FROM task_category WHERE CategoryID = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, categoryID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                category = new TaskCategory();
+                category.setCategoryID(rs.getInt("CategoryID"));
+                category.setCategoryName(rs.getString("CategoryName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return category;
+    }
+}

@@ -1,0 +1,108 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Base styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #0056b3, #00aaff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Navigation styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        li a {
+            background-color: #ffffff;
+            color: #0056b3;
+            font-size: 18px;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li a:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer styling */
+        footer {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #00aaff;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <ul>
+        <li><a href="my-tasks.jsp">My Tasks</a></li>
+        <li><a href="create-task.jsp">Create Task</a></li>
+        <li><a href="../LogoutServlet">Logout</a></li>
+    </ul>
+
+    <footer>
+        <p>&copy; 2025 DoTask. All rights reserved. | <a href="privacy-policy.jsp">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

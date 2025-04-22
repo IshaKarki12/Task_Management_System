@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Database Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f0f0f0;
+        }
+        .result {
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #4CAF50;
+        }
+        .failure {
+            background-color: #f44336;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Database Connection Test</h2>
+
+<%
+    // Database connection variables
+    String jdbcURL = "jdbc:mysql://localhost:3306/your_database_name"; // Update this
+    String dbUser = "root"; // Update this with your MySQL username
+    String dbPassword = "your_password"; // Update this with your MySQL password
+
+    Connection conn = null;
+
+    try {
+        // Establish the database connection
+        conn = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+
+        if (conn != null) {
+            out.println("<div class='result success'>✅ Database Connection Successful!</div>");
+        }
+    } catch (SQLException e) {
+        // Print stack trace to get more details about the error
+        out.println("<div class='result failure'>❌ Failed to connect to the database.</div>");
+        out.println("<p>Error details: </p>");
+        out.println("<pre>" + e.getMessage() + "</pre>");
+        e.printStackTrace();
+    } finally {
+        // Close the connection if it was successful
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            out.println("<p>Error closing connection: </p>");
+            out.println("<pre>" + e.getMessage() + "</pre>");
+            e.printStackTrace();
+        }
+    }
+%>
+
+</body>
+</html>

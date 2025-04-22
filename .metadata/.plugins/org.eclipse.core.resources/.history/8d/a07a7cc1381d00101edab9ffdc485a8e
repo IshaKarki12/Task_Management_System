@@ -1,0 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tasks</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h2>My Task List</h2>
+    <table border="1">
+        <tr>
+            <th>Task Name</th><th>Status</th><th>Due Date</th><th>Actions</th>
+        </tr>
+        <!-- Rows dynamically filled later -->
+    </table>
+    <a href="user-dashboard.jsp">Back to Dashboard</a>
+</body>
+</html>

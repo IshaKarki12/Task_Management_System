@@ -1,0 +1,165 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Redirect to dashboard if already logged in
+    // Check if the user is already logged in
+    if (session.getAttribute("currentUser") != null) {
+        // Get the current user's role
+        String userRole = (String) session.getAttribute("userRole");
+
+        // Redirect to the respective dashboard based on the user's role
+        if ("Admin".equals(userRole)) {
+            response.sendRedirect("admin-dashboard.jsp"); // Redirect to admin dashboard
+        } else if ("User".equals(userRole)) {
+            response.sendRedirect("user-dashboard.jsp"); // Redirect to user dashboard
+        }
+        return; // End processing after the redirection
+    }
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f7f9fb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        h2 {
+            color: #1a3e72;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styling */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .form-container label {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #1a3e72;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #155177;
+        }
+
+        .remember-me {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Link Styling */
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #1a3e72;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Login</h2>
+
+        <% 
+            String error = (String) request.getAttribute("error");
+            if (error != null) {
+        %>
+            <div class="error-message">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="../LoginServlet" method="post">
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="<%= request.getAttribute("rememberedEmail") != null ? request.getAttribute("rememberedEmail") : "" %>" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="<%= request.getAttribute("rememberedPassword") != null ? request.getAttribute("rememberedPassword") : "" %>" required>
+
+            <div class="remember-me">
+                <input type="checkbox" name="remember" <%= request.getAttribute("rememberedEmail") != null ? "checked" : "" %>> Remember Me
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+
+        <p>Don't have an account? <a href="register.jsp">Register here</a></p>
+    </div>
+
+</body>
+</html>

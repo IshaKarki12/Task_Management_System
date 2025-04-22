@@ -1,0 +1,41 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.model.User" %>
+<%@ page import="com.example.dao.UserDAO" %>
+<%
+    UserDAO userDAO = new UserDAO();
+    List<User> userList = userDAO.getAllUsers();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Users</title>
+    <!-- Include your CSS and JS files here -->
+</head>
+<body>
+    <h2>Manage Users</h2>
+    <a href="add-user.jsp">Add New User</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        <%
+            for(User user : userList){
+        %>
+        <tr>
+            <td><%= user.getId() %></td>
+            <td><%= user.getName() %></td>
+            <td><%= user.getEmail() %></td>
+            <td>
+                <a href="edit-user.jsp?id=<%= user.getId() %>">Edit</a>
+                <a href="delete-user.jsp?id=<%= user.getId() %>">Delete</a>
+            </td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+</body>
+</html>

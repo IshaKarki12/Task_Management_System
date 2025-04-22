@@ -1,0 +1,150 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Redirect to dashboard if already logged in
+    if (session.getAttribute("currentUser") != null) {
+        response.sendRedirect("dashboard.jsp");
+        return;
+    }
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #e4f2f9; /* Soft background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #1a3e72;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="email"], input[type="password"], input[type="submit"], input[type="checkbox"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="email"], input[type="password"] {
+            background-color: #f9f9f9;
+        }
+
+        input[type="submit"] {
+            background-color: #1a3e72;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #155177;
+        }
+
+        input[type="checkbox"] {
+            margin: 10px 0;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Link Styling */
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #1a3e72;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Login to Your Account</h2>
+
+        <% 
+            String error = (String) request.getAttribute("error");
+            if (error != null) {
+        %>
+            <div class="error-message">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="../LoginServlet" method="post">
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="<%= request.getAttribute("rememberedEmail") != null ? request.getAttribute("rememberedEmail") : "" %>" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="<%= request.getAttribute("rememberedPassword") != null ? request.getAttribute("rememberedPassword") : "" %>" required>
+
+            <div>
+                <input type="checkbox" name="remember" <%= request.getAttribute("rememberedEmail") != null ? "checked" : "" %>> 
+                <label for="remember">Remember Me</label>
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+
+        <p>Don't have an account? <a href="register.jsp">Register here</a></p>
+    </div>
+</body>
+</html>
