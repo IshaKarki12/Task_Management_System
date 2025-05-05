@@ -1,4 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.User" %>
+<%
+    // Retrieve the logged-in user from the session
+    User loggedUser = (User) session.getAttribute("currentUser");
+    
+    // Redirect to login page if the user is not logged in
+    if (loggedUser == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,7 +178,7 @@
 
 <!-- Main Container -->
 <div class="container">
-    <h2>Welcome to the Admin Dashboard</h2>
+    <h2>Welcome to the Admin Dashboard, <%= loggedUser.getUserName() %>!</h2>
 
     <!-- Profile Card -->
     <div class="profile-card">
@@ -176,26 +187,26 @@
             <a href="edit-profile.jsp">Edit</a>
         </div>
         <div class="profile-content">
-            <div class="profile-picture">
-                <img src="images/default-profile.png" alt="Profile Pic">
-            </div>
+           <div class="profile-picture">
+    <img src="<%= request.getContextPath() + "/ProfileImageServlet" %>" alt="Profile Pic">
+</div>
             <div class="profile-info">
                 <table>
                     <tr>
                         <th>Name</th>
-                        <td>Admin User</td>
+                        <td><%= loggedUser.getUserName() %></td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td>admin@example.com</td>
+                        <td><%= loggedUser.getEmail() %></td>
                     </tr>
                     <tr>
                         <th>Phone</th>
-                        <td>Mobile Number</td>
+                        <td><%= loggedUser.getPhoneNo() %></td>
                     </tr>
                     <tr>
                         <th>Role</th>
-                        <td>Admin</td>
+                        <td><%= loggedUser.getRoleID() == 1 ? "Admin" : "User" %></td>
                     </tr>
                 </table>
             </div>

@@ -1,87 +1,156 @@
 package dao;
 
 import model.Task;
+import model.User;
 import util.DBUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskDAO {
 
-    // Create Task
-    public int createTask(Task task) {
-        try (Connection connection = DBUtil.getConnection()) {
-            String sql = "INSERT INTO task (TaskName, TaskDescription, Status, DueDate, UserID, CategoryID) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
+    // Method to create a new task
+    public boolean createTask(Task task) {
+        String query = "INSERT INTO task (TaskName, TaskDescription, Status, DueDate, UserID, CategoryID) " +
+                       "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, task.getTaskName());
             stmt.setString(2, task.getTaskDescription());
             stmt.setString(3, task.getStatus());
-            stmt.setString(4, task.getDueDate());
+            stmt.setDate(4, task.getDueDate());
             stmt.setInt(5, task.getUserID());
             stmt.setInt(6, task.getCategoryID());
 
-            return stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0; // Return true if a task was inserted successfully
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+ // Fetch tasks for a specific user
+    public List<Task> getTasksByUserId(int userId) {
+        List<Task> tasks = new ArrayList<>();
+
+        String sql = "SELECT TaskID, TaskName, Status, DueDate FROM Task WHERE UserID = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Task task = new Task();
+                task.setTaskID(rs.getInt("TaskID"));
+                task.setTaskName(rs.getString("TaskName"));
+                task.setStatus(rs.getString("Status"));
+                task.setDueDate(rs.getDate("DueDate"));
+                tasks.add(task);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+
+        return tasks;
     }
+   
+       
+    public Task getTaskById(int id) {
+        String sql = "SELECT * FROM Task WHERE TaskID = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    // Update Task
-    public int updateTask(Task task) {
-        try (Connection connection = DBUtil.getConnection()) {
-            String sql = "UPDATE task SET TaskName = ?, TaskDescription = ?, Status = ?, DueDate = ?, CategoryID = ? WHERE TaskID = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, task.getTaskName());
-            stmt.setString(2, task.getTaskDescription());
-            stmt.setString(3, task.getStatus());
-            stmt.setString(4, task.getDueDate());
-            stmt.setInt(5, task.getCategoryID());
-            stmt.setInt(6, task.getTaskID());
-
-            return stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    // Delete Task
-    public int deleteTask(int taskID) {
-        try (Connection connection = DBUtil.getConnection()) {
-            String sql = "DELETE FROM task WHERE TaskID = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, taskID);
-            return stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    // Get Task by ID
-    public Task getTaskById(int taskID) {
-        Task task = null;
-        try (Connection connection = DBUtil.getConnection()) {
-            String sql = "SELECT * FROM task WHERE TaskID = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, taskID);
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                task = new Task();
+                Task task = new Task();
                 task.setTaskID(rs.getInt("TaskID"));
                 task.setTaskName(rs.getString("TaskName"));
                 task.setTaskDescription(rs.getString("TaskDescription"));
                 task.setStatus(rs.getString("Status"));
-                task.setDueDate(rs.getString("DueDate"));
-                task.setTaskCreatedAt(rs.getTimestamp("TaskCreatedAt"));
-                task.setTaskUpdatedAt(rs.getTimestamp("TaskUpdatedAt"));
+                task.setDueDate(rs.getDate("DueDate"));
+            ;
                 task.setUserID(rs.getInt("UserID"));
-                task.setCategoryID(rs.getInt("CategoryID"));
+                return task;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return task;
+        return null;
     }
+
+
+    
+
+    public boolean updateTask(Task task) {
+        String sql = "UPDATE Task SET TaskName = ?, TaskDescription = ?, Status = ?, DueDate = ?, TaskUpdatedAt = NOW() WHERE TaskID = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, task.getTaskName());
+            stmt.setString(2, task.getTaskDescription());
+            stmt.setString(3, task.getStatus());
+            stmt.setDate(4, task.getDueDate());
+            stmt.setInt(5, task.getTaskID());
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteTask(int taskId) {
+        String sql = "DELETE FROM Task WHERE TaskID = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, taskId);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<Task> getAllTasks() {
+        List<Task> list = new ArrayList<>();
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Task")) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Task task = new Task();
+                task.setTaskID(rs.getInt("TaskID"));
+                task.setTaskName(rs.getString("TaskName"));
+                task.setTaskDescription(rs.getString("TaskDescription"));
+                task.setStatus(rs.getString("Status"));
+                task.setDueDate(rs.getDate("DueDate"));
+                
+                task.setUserID(rs.getInt("UserID"));
+                list.add(task);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+   
 }

@@ -173,7 +173,7 @@
       <div class="form-group">
         <label for="roleID">Role:</label>
         <select name="roleID" required>
-          <option value="1">Admin</option>
+         <!--   <option value="1">Admin</option>   -->
           <option value="2">User</option>
         </select>
       </div>

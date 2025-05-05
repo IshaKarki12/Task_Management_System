@@ -18,6 +18,9 @@
     <url-pattern>/view/*</url-pattern>
 </filter-mapping>
 
+
+
+
  <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>controller.RegisterServlet</servlet-class>

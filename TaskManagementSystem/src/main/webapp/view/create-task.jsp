@@ -1,4 +1,8 @@
+<%@ page import="java.util.*, model.Category, dao.CategoryDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Category> categories = new CategoryDAO().getAllCategories();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,7 +122,7 @@
     <a href="user-dashboard.jsp" class="back-link">Back to Dashboard</a>
     <div>
         <h2>Create New Task</h2>
-        <form action="#" method="post">
+        <form action="../CreateTaskServlet" method="post">
             <label for="taskName">Task Name</label>
             <input type="text" id="taskName" name="taskName" placeholder="Enter Task Name" required><br>
 
@@ -126,12 +130,15 @@
             <textarea id="taskDescription" name="taskDescription" placeholder="Describe the task" rows="4" cols="50"></textarea><br>
 
             <label for="category">Task Category</label>
-            <select id="category" name="category" required>
+            <select id="category" name="categoryId" required>
                 <option value="" disabled selected>Select Category</option>
-                <option value="Development">Development</option>
-                <option value="Design">Design</option>
-                <option value="Testing">Testing</option>
-                <option value="Documentation">Documentation</option>
+                <% 
+                    for (Category cat : categories) { 
+                %>
+                    <option value="<%= cat.getId() %>"><%= cat.getName() %></option>
+                <% 
+                    } 
+                %>
             </select><br>
 
             <label for="dueDate">Due Date</label>

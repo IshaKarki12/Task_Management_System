@@ -1,3 +1,6 @@
+<%@ page import="java.sql.*, java.util.*" %>
+<%@ page import="model.User" %>
+<%@ page import="dao.UserDAO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users</title>
     <style>
+        /* your CSS styles remain unchanged */
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f8f8;
@@ -52,24 +56,27 @@
         .action-buttons a {
             margin-right: 10px;
         }
-        .add-user {
-            margin: 20px 0;
+        .btn {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #2196F3;
+            padding: 12px 24px;
+            background-color: #4CAF50;
             color: white;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
         }
-        .add-user:hover {
-            background-color: #1976D2;
+        .btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
     <h2>Manage Users</h2>
-    <a href="#" class="add-user">Add New User</a>
-    
+    <a href="add-user.jsp" class="btn">Add User</a>
+
     <div class="table-container">
         <table>
             <thead>
@@ -81,34 +88,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>john.doe@example.com</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jane Smith</td>
-                    <td>jane.smith@example.com</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Michael Brown</td>
-                    <td>michael.brown@example.com</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <!-- Additional rows can be added here -->
+                <%
+                    UserDAO userDAO = new UserDAO();
+                    List<User> userList = userDAO. getUsersByRoleID(2); // Only users with roleID = 2 (not admins)
+
+                    if (userList != null && !userList.isEmpty()) {
+                        for (User user : userList) {
+                %>
+                    <tr>
+                        <td><%= user.getUserID() %></td>
+                        <td><%= user.getUserName() %></td>
+                        <td><%= user.getEmail() %></td>
+                        <td class="action-buttons">
+                             <a href="edit-user.jsp?userID=<%= user.getUserID() %>" class="button" style="background-color: #4CAF50;">Edit</a>
+                            <a href="../DeleteUserServlet?id=<%= user.getUserID() %>" class="button" style="background-color: #f44336;">Delete</a>
+                        </td>
+                    </tr>
+                <%
+                        }
+                    } else {
+                %>
+                    <tr>
+                        <td colspan="4">No users found.</td>
+                    </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
     </div>

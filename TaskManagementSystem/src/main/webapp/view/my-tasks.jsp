@@ -1,4 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*, model.Task, dao.TaskDAO" %>
+<%
+    Integer userId = (Integer) session.getAttribute("currentUserID");
+    if (userId == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    TaskDAO taskDAO = new TaskDAO();
+    List<Task> taskList = taskDAO.getTasksByUserId(userId);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,6 +108,18 @@
 </head>
 <body>
     <h2>My Task List</h2>
+    <%
+    String msg = request.getParameter("msg");
+    if ("deleted".equals(msg)) {
+%>
+    <p style="color: green;">Task deleted successfully!</p>
+<%
+    } else if ("notdeleted".equals(msg)) {
+%>
+    <p style="color: red;">Failed to delete the task.</p>
+<%
+    }
+%>
     <table>
         <thead>
             <tr>
@@ -105,26 +129,29 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Example task rows -->
-            <tr>
-                <td>Task 1</td>
-                <td id="status-1">Pending</td>
-                <td>2025-04-30</td>
-                <td>
-                    <button onclick="editTask(1)">Edit Task</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Task 2</td>
-                <td id="status-2">In Progress</td>
-                <td>2025-05-15</td>
-                <td>
-                    <button onclick="editTask(2)">Edit Task</button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
+       <tbody>
+<% for (Task task : taskList) { %>
+    <tr>
+        <td><%= task.getTaskName() %></td>
+        <td><%= task.getStatus() %></td>
+        <td><%= task.getDueDate() %></td>
+        <td>
+        <a href="edit-task.jsp?taskId=<%= task.getTaskID() %>">Edit</a>
+        
+        <a href="../DeleteTaskServlet?taskId=<%= task.getTaskID() %>" onclick="return confirm('Are you sure you want to delete this task?');">
+    Delete
+</a>
+            
+        </td>
+    </tr>
+<% } %>
+
+<% if (taskList.isEmpty()) { %>
+    <tr>
+        <td colspan="4">No tasks found.</td>
+    </tr>
+<% } %>
+</tbody>
     </table>
     
     <a href="user-dashboard.jsp" class="back-link">Back to Dashboard</a>

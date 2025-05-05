@@ -1,5 +1,6 @@
 package controller; 
-import dao.UserDAO; 
+import dao.UserDAO;
+ 
 import jakarta.servlet.ServletException; 
 import jakarta.servlet.annotation.WebServlet; 
 import jakarta.servlet.http.HttpServlet; 
@@ -32,4 +33,4 @@ request.setAttribute("error", "Registration failed. Please try again.");
 request.getRequestDispatcher("view/register.jsp").forward(request, response); 
 } 
 } 
-}   
+} 

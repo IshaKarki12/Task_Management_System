@@ -1,19 +1,18 @@
 package model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Task {
     private int taskID;
     private String taskName;
     private String taskDescription;
     private String status;
-    private String dueDate;
-    private Timestamp taskCreatedAt;
-    private Timestamp taskUpdatedAt;
+    private Date dueDate;
     private int userID;
     private int categoryID;
 
     // Getters and Setters
+
     public int getTaskID() {
         return taskID;
     }
@@ -46,28 +45,12 @@ public class Task {
         this.status = status;
     }
 
-    public String getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public Timestamp getTaskCreatedAt() {
-        return taskCreatedAt;
-    }
-
-    public void setTaskCreatedAt(Timestamp taskCreatedAt) {
-        this.taskCreatedAt = taskCreatedAt;
-    }
-
-    public Timestamp getTaskUpdatedAt() {
-        return taskUpdatedAt;
-    }
-
-    public void setTaskUpdatedAt(Timestamp taskUpdatedAt) {
-        this.taskUpdatedAt = taskUpdatedAt;
     }
 
     public int getUserID() {

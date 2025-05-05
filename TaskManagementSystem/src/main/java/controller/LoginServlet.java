@@ -30,6 +30,14 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
+            session.setAttribute("currentUserID", user.getUserID());
+            
+            // 👉 Add this block to set role name
+            if (user.getRoleID() == 1) {
+                session.setAttribute("userRole", "Admin");
+            } else if (user.getRoleID() == 2) {
+                session.setAttribute("userRole", "User");
+            }
 
             // If "Remember Me" is checked
             if (remember != null && remember.equals("on")) {

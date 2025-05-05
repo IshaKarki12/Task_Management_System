@@ -1,4 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.User" %>
+<%
+    // Retrieve the logged-in user from the session
+    User loggedUser = (User) session.getAttribute("currentUser");
+    
+    // Redirect to login page if the user is not logged in
+    if (loggedUser == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +17,7 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* [Your original CSS remains unchanged] */
-        * {
+       * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -154,6 +164,7 @@
             color: #0072ff;
         }
     </style>
+    </style>
 </head>
 <body>
 
@@ -168,7 +179,7 @@
 
 <!-- Main Container -->
 <div class="container">
-    <h2>Welcome to Your Dashboard</h2>
+    <h2>Welcome to Your Dashboard, <%= loggedUser.getUserName() %>!</h2>
 
     <!-- Profile Card -->
     <div class="profile-card">
@@ -178,25 +189,27 @@
         </div>
         <div class="profile-content">
             <div class="profile-picture">
-                <img src="images/default-profile.png" alt="Profile Pic">
+                <img src="<%= loggedUser.getProfileImage() != null ? "data:image/jpeg;base64," + new String(loggedUser.getProfileImage()) : "images/default-profile.png" %>" alt="Profile Pic">
             </div>
             <div class="profile-info">
                 <table>
                     <tr>
                         <th>Name</th>
-                        <td>Full Name</td>
+                        <td><%= loggedUser.getUserName() %></td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td>UserName@example.com</td>
+                        <td><%= loggedUser.getEmail() %></td>
                     </tr>
                     <tr>
                         <th>Phone</th>
-                        <td>Mobile Number</td>
+                        <td><%= loggedUser.getPhoneNo() %></td>
                     </tr>
                     <tr>
                         <th>Role</th>
-                        <td>User</td>
+                        <td>
+                            <%= loggedUser.getRoleID() == 1 ? "Admin" : "User" %> <!-- Assuming 1 is for Admin, you can customize based on your RoleID -->
+                        </td>
                     </tr>
                 </table>
             </div>

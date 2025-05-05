@@ -10,8 +10,8 @@ public class DBUtil {
 
     // Database credentials
     private static final String DB_URL = "jdbc:mysql://localhost:3306/taskmanagementsystem";
-    private static final String DB_USER = "root"; // Update with your MySQL username
-    private static final String DB_PASSWORD = ""; // Update with your MySQL password
+    private static final String DB_USER = "root"; // 
+    private static final String DB_PASSWORD = ""; // 
 
     // Method to get a connection
     public static Connection getConnection() {
@@ -40,4 +40,10 @@ public class DBUtil {
             e.printStackTrace();
         }
     }
+
+
+	public static void close(PreparedStatement stmt, Connection conn) {
+		// TODO Auto-generated method stub
+		
+	}
 }

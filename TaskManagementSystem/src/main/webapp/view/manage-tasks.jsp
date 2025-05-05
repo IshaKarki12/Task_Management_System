@@ -1,3 +1,9 @@
+<%@ page import="java.util.*, model.Task, dao.TaskDAO" %>
+<%
+    TaskDAO taskDAO = new TaskDAO();
+    List<Task> taskList = taskDAO.getAllTasks(); // This fetches all tasks from DB
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,41 +89,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>101</td>
-                    <td>Design UI</td>
-                    <td>Create wireframe for user dashboard</td>
-                    <td>2025-04-30</td>
-                    <td>In Progress</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>102</td>
-                    <td>Develop API</td>
-                    <td>Develop user authentication API</td>
-                    <td>2025-05-05</td>
-                    <td>Pending</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>103</td>
-                    <td>Testing</td>
-                    <td>Test user registration flow</td>
-                    <td>2025-05-10</td>
-                    <td>Completed</td>
-                    <td class="action-buttons">
-                        <a href="#" class="button">Edit</a>
-                        <a href="#" class="button" style="background-color: #f44336;">Delete</a>
-                    </td>
-                </tr>
-                <!-- Additional rows can be added here -->
-            </tbody>
+<% for(Task task : taskList) { %>
+    <tr>
+        <td><%= task.getTaskID() %></td>
+        <td><%= task.getTaskName() %></td>
+        <td><%= task.getTaskDescription() %></td>
+        <td><%= task.getDueDate() %></td>
+        <td><%= task.getStatus() %></td>
+        <td class="action-buttons">
+            <a href="admin-edit-task.jsp?taskId=<%= task.getTaskID() %>" class="button">Edit</a>
+            <a href="../AdminDeleteTaskServlet?taskId=<%= task.getTaskID() %>" class="button" style="background-color: #f44336;">Delete</a>
+        </td>
+    </tr>
+<% } %>
+</tbody>
         </table>
     </div>
 </body>

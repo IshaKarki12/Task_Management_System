@@ -85,4 +85,9 @@ public class User {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+	public void setImageContentType(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
