@@ -73,6 +73,22 @@
         .message.error {
             color: red;
         }
+         .back-link {
+            margin-top: 680px;
+            padding: 14px 28px;
+            background-color: #263238;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .back-link:hover {
+            background-color: #37474f;
+        }
     </style>
 </head>
 <body>
@@ -118,6 +134,9 @@
         <%
             }
         %>
+        <div style="text-align:center; margin-top: 20px;">
+        <a href="user-dashboard.jsp" class="back-link">⬅ Back to Dashboard</a>
+    </div>
     </div>
 </body>
 </html>

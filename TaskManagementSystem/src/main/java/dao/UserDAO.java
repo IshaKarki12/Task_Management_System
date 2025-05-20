@@ -154,5 +154,45 @@ public class UserDAO {
 
         return false; // return false if deletion failed
     }
-    
+    public static boolean updateUserProfile(User user) {
+        String sql = "UPDATE User SET UserName = ?, Email = ?, PhoneNo = ?, UpdatedAt = CURRENT_TIMESTAMP WHERE UserID = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getUserName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPhoneNo());
+            stmt.setInt(4, user.getUserID());
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM User";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setUserID(rs.getInt("UserID"));
+                user.setUserName(rs.getString("UserName"));
+                user.setEmail(rs.getString("Email"));
+                users.add(user);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
 } 

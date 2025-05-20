@@ -15,112 +15,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Tasks</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #f4f7f6;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #ffffff);
+            padding: 60px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
         h2 {
-            color: #333;
-            margin-top: 30px;
+            font-size: 36px;
+            font-weight: 600;
+            color: #0d47a1;
+            margin-bottom: 35px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        table {
-            width: 80%;
-            max-width: 900px;
-            border-collapse: collapse;
-            margin: 20px auto;
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .task-table {
+            width: 95%;
+            max-width: 1100px;
+            border-collapse: separate;
+            border-spacing: 0 16px;
         }
 
-        th, td {
-            padding: 12px 20px;
-            text-align: center;
-            border: 1px solid #ddd;
-            color: #333;
+        thead {
+            background-color: #1565c0;
+            color: #fff;
+            border-radius: 12px;
         }
 
         th {
-            background-color: #4CAF50;
-            color: white;
+            padding: 18px 22px;
+            text-align: center;
             font-size: 16px;
+            font-weight: 500;
         }
 
         td {
-            font-size: 14px;
+            padding: 18px 22px;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        tbody tr {
+            transition: all 0.3s ease;
         }
 
-        tr:hover {
-            background-color: #f1f1f1;
-            cursor: pointer;
+        tbody tr:hover td {
+            background-color: #e3f2fd;
+            transform: scale(1.01);
         }
 
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+        .btn-edit {
+            background-color: #1976d2;
+            color: #fff;
         }
 
-        button:active {
-            background-color: #004080;
-            transform: translateY(0);
+        .btn-edit:hover {
+            background-color: #0d47a1;
+        }
+
+        .btn-delete {
+            background-color: #ef5350;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .btn-delete:hover {
+            background-color: #c62828;
+        }
+
+        .message {
+            background-color: #c8e6c9;
+            color: #256029;
+            border: 1px solid #a5d6a7;
+            padding: 12px 24px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: 15px;
         }
 
         .back-link {
-            margin-top: 30px;
-            text-decoration: none;
-            background-color: #333;
+            margin-top: 40px;
+            padding: 14px 28px;
+            background-color: #263238;
             color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 14px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .back-link:hover {
-            background-color: #555;
+            background-color: #37474f;
         }
+
+        td[colspan="4"] {
+            font-style: italic;
+            color: #888;
+        }
+
     </style>
 </head>
 <body>
-    <h2>My Task List</h2>
-    <%
-    String msg = request.getParameter("msg");
-    if ("deleted".equals(msg)) {
-%>
-    <p style="color: green;">Task deleted successfully!</p>
-<%
-    } else if ("notdeleted".equals(msg)) {
-%>
-    <p style="color: red;">Failed to delete the task.</p>
-<%
-    }
-%>
-    <table>
+
+    <h2>📋 My Task List</h2>
+
+    <% String msg = request.getParameter("msg"); %>
+    <% if ("deleted".equals(msg)) { %>
+        <div class="message">✅ Task deleted successfully!</div>
+    <% } %>
+
+    <table class="task-table">
         <thead>
             <tr>
                 <th>Task Name</th>
@@ -129,39 +163,28 @@
                 <th>Actions</th>
             </tr>
         </thead>
-       <tbody>
-<% for (Task task : taskList) { %>
-    <tr>
-        <td><%= task.getTaskName() %></td>
-        <td><%= task.getStatus() %></td>
-        <td><%= task.getDueDate() %></td>
-        <td>
-        <a href="edit-task.jsp?taskId=<%= task.getTaskID() %>">Edit</a>
-        
-        <a href="../DeleteTaskServlet?taskId=<%= task.getTaskID() %>" onclick="return confirm('Are you sure you want to delete this task?');">
-    Delete
-</a>
-            
-        </td>
-    </tr>
-<% } %>
+        <tbody>
+        <% for (Task task : taskList) { %>
+            <tr>
+                <td><%= task.getTaskName() %></td>
+                <td><%= task.getStatus() %></td>
+                <td><%= task.getDueDate() %></td>
+                <td>
+                    <a href="edit-task.jsp?taskId=<%= task.getTaskID() %>" class="btn btn-edit">Edit</a>
+                    <a href="../DeleteTaskServlet?taskId=<%= task.getTaskID() %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                </td>
+            </tr>
+        <% } %>
 
-<% if (taskList.isEmpty()) { %>
-    <tr>
-        <td colspan="4">No tasks found.</td>
-    </tr>
-<% } %>
-</tbody>
+        <% if (taskList.isEmpty()) { %>
+            <tr>
+                <td colspan="4">No tasks found. You're all caught up! 🎉</td>
+            </tr>
+        <% } %>
+        </tbody>
     </table>
-    
-    <a href="user-dashboard.jsp" class="back-link">Back to Dashboard</a>
 
-    <script>
-        // Function to navigate to the edit task page
-        function editTask(taskId) {
-            // Assuming the edit page has a query parameter for the task ID
-            window.location.href = `edit-task.jsp?taskId=${taskId}`;
-        }
-    </script>
+    <a href="user-dashboard.jsp" class="back-link">⬅ Back to Dashboard</a>
+
 </body>
 </html>

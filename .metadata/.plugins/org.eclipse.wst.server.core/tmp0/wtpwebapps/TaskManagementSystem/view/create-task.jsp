@@ -7,152 +7,149 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Create New Task</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Task</title>
-    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Matching Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: #f4f7f6;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
-            flex-direction: column;
+            padding-top: 60px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px 35px;
+            border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 620px;
         }
 
         h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 28px;
             text-align: center;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 26px;
+            font-weight: 500;
         }
 
         label {
-            font-size: 16px;
-            color: #555;
+            font-size: 15px;
+            font-weight: 500;
             margin-bottom: 5px;
             display: block;
+            color: #444;
         }
 
-        input[type="text"], input[type="date"], select, textarea {
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 15px;
+            margin-bottom: 20px;
             box-sizing: border-box;
-            transition: border 0.3s ease;
+            transition: border-color 0.2s;
         }
 
-        input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+        input:focus,
+        select:focus,
+        textarea:focus {
             border-color: #4CAF50;
             outline: none;
         }
 
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
         input[type="submit"] {
             background-color: #4CAF50;
-            color: white;
+            color: #fff;
             border: none;
-            font-size: 18px;
-            cursor: pointer;
             padding: 14px;
-            width: 100%;
+            font-size: 16px;
             border-radius: 6px;
-            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
         }
 
         input[type="submit"]:hover {
             background-color: #45a049;
-            transform: translateY(-2px);
-        }
-
-        input[type="submit"]:active {
-            background-color: #388e3c;
-            transform: translateY(0);
         }
 
         .back-link {
-            text-decoration: none;
-            color: #4CAF50;
-            font-size: 18px;
-            display: inline-flex;
-            align-items: center;
-            position: fixed;
+            position: absolute;
             top: 20px;
             left: 20px;
-            z-index: 1000;
-            transition: color 0.3s;
+            text-decoration: none;
+            font-size: 16px;
+            color: #4CAF50;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .back-link::before {
-            content: '←';
-            margin-right: 8px;
-            font-size: 22px;
-            transition: transform 0.3s;
-        }
-
-        .back-link:hover::before {
-            transform: translateX(-4px);
-        }
-
-        .back-link::after {
-            content: ''; /* remove right arrow */
+            content: "←";
+            font-size: 18px;
         }
 
         .back-link:hover {
-            color: #45a049;
+            color: #388e3c;
         }
     </style>
 </head>
 <body>
-    <a href="user-dashboard.jsp" class="back-link">Back to Dashboard</a>
-    <div>
-        <h2>Create New Task</h2>
-        <form action="../CreateTaskServlet" method="post">
-            <label for="taskName">Task Name</label>
-            <input type="text" id="taskName" name="taskName" placeholder="Enter Task Name" required><br>
 
-            <label for="taskDescription">Task Description</label>
-            <textarea id="taskDescription" name="taskDescription" placeholder="Describe the task" rows="4" cols="50"></textarea><br>
+<a href="user-dashboard.jsp" class="back-link">Back to Dashboard</a>
 
-            <label for="category">Task Category</label>
-            <select id="category" name="categoryId" required>
-                <option value="" disabled selected>Select Category</option>
-                <% 
-                    for (Category cat : categories) { 
-                %>
-                    <option value="<%= cat.getId() %>"><%= cat.getName() %></option>
-                <% 
-                    } 
-                %>
-            </select><br>
+<div class="container">
+    <h2>Create New Task</h2>
+    <form action="../CreateTaskServlet" method="post">
+        <label for="taskName">Task Name</label>
+        <input type="text" id="taskName" name="taskName" placeholder="Enter Task Name" required>
 
-            <label for="dueDate">Due Date</label>
-            <input type="date" id="dueDate" name="dueDate" required><br>
+        <label for="taskDescription">Task Description</label>
+        <textarea id="taskDescription" name="taskDescription" placeholder="Describe the task..."></textarea>
 
-            <label for="status">Task Status</label>
-            <select id="status" name="status" required>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-            </select><br>
+        <label for="category">Task Category</label>
+        <select id="category" name="categoryId" required>
+            <option value="" disabled selected>Select Category</option>
+            <% for (Category cat : categories) { %>
+                <option value="<%= cat.getId() %>"><%= cat.getName() %></option>
+            <% } %>
+        </select>
 
-            <input type="submit" value="Create Task">
-        </form>
-    </div>
+        <label for="dueDate">Due Date</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+
+        <label for="status">Task Status</label>
+        <select id="status" name="status" required>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <input type="submit" value="Create Task">
+    </form>
+</div>
+
 </body>
 </html>

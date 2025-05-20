@@ -1,10 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.User" %>
 <%
-    // Retrieve the logged-in user from the session
     User loggedUser = (User) session.getAttribute("currentUser");
-    
-    // Redirect to login page if the user is not logged in
     if (loggedUser == null) {
         response.sendRedirect("login.jsp");
         return;
@@ -17,26 +14,27 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-       * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
             color: #333;
             line-height: 1.6;
         }
 
+        /* Navbar Styling */
         .navbar {
-            background-color: #0077cc;
-            padding: 15px 30px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background-color: #333;
+            padding: 20px;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar ul {
@@ -49,81 +47,148 @@
         .navbar a {
             text-decoration: none;
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background 0.2s;
-            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         .navbar a:hover {
-            background-color: #005fa3;
+            background-color: #007bff;
+            transform: translateY(-2px);
         }
 
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: #0056b3;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .hero button {
+            background-color: #007bff;
+            border: none;
+            padding: 12px 30px;
+            color: white;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .hero button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Container Styling */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
         h2 {
             margin-bottom: 20px;
-            font-size: 28px;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            color: #333;
         }
 
+        /* Card Section */
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            font-size: 18px;
+            color: #333;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card-body div {
+            padding: 20px;
+            background: #f7f7f7;
+            border-radius: 8px;
+        }
+
+        /* Profile Card Styling */
         .profile-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .profile-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .profile-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
         .profile-header h3 {
-            font-size: 22px;
-            color: #0077cc;
+            font-size: 28px;
+            color: #0056b3;
+            font-weight: 600;
         }
 
         .profile-header a {
             text-decoration: none;
-            background-color: #0077cc;
+            background-color: #007bff;
             color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background 0.2s;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .profile-header a:hover {
-            background-color: #005fa3;
-        }
-
-        .profile-content {
-            display: flex;
-            align-items: flex-start;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .profile-picture {
-            min-width: 100px;
-            max-width: 120px;
-        }
-
-        .profile-picture img {
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-            border: 3px solid #0077cc;
+            background-color: #0056b3;
         }
 
         .profile-info {
-            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
         }
 
         .profile-info table {
@@ -133,37 +198,71 @@
 
         .profile-info th,
         .profile-info td {
-            padding: 12px;
+            padding: 18px;
             text-align: left;
+            border-bottom: 1px solid #eaeaea;
+            color: #333;
         }
 
         .profile-info th {
-            background-color: #e9f3fc;
-            color: #444;
-            width: 150px;
+            background-color: #f2f2f2;
+            color: #555;
         }
 
         .profile-info td {
-            background-color: #fdfdfd;
+            background-color: #fafafa;
         }
 
+        /* Footer Styling */
         footer {
+            background-color: #333;
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+            padding: 30px 0;
+            margin-top: 50px;
             font-size: 14px;
-            color: #777;
+            color: #ddd;
         }
 
         footer a {
-            color: #444;
+            color: #007bff;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
         footer a:hover {
-            color: #0072ff;
+            color: #fff;
         }
-    </style>
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+         footer {
+            font-size: 14px;
+            color: white;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            font-style: italic;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -177,41 +276,57 @@
     </ul>
 </div>
 
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Welcome back, <%= loggedUser.getUserName() %>!</h1>
+    <p>Your tasks are waiting. Stay organized and on top of things.</p>
+    <button onclick="window.location.href='my-tasks.jsp'">View My Tasks</button>
+</div>
+
 <!-- Main Container -->
 <div class="container">
-    <h2>Welcome to Your Dashboard, <%= loggedUser.getUserName() %>!</h2>
+    <h2>Dashboard</h2>
 
     <!-- Profile Card -->
     <div class="profile-card">
         <div class="profile-header">
-            <h3>User Profile</h3>
-            <a href="edit-profile.jsp">Edit</a>
+            <h3>Your Profile</h3>
+            <a href="editprofile.jsp">Edit Profile</a>
         </div>
-        <div class="profile-content">
-            <div class="profile-picture">
-                <img src="<%= loggedUser.getProfileImage() != null ? "data:image/jpeg;base64," + new String(loggedUser.getProfileImage()) : "images/default-profile.png" %>" alt="Profile Pic">
+
+        <div class="profile-info">
+            <table>
+                <tr>
+                    <th>Full Name</th>
+                    <td><%= loggedUser.getUserName() %></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><%= loggedUser.getEmail() %></td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td><%= loggedUser.getPhoneNo() %></td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+                    <td><%= loggedUser.getRoleID() == 1 ? "Admin" : "User" %></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- User Tips Section -->
+    <div class="card">
+        <div class="card-header">User Tips</div>
+        <div class="card-body">
+            <div>
+                <h4>Stay Organized</h4>
+                <p>Keep track of your tasks and set reminders for important deadlines.</p>
             </div>
-            <div class="profile-info">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <td><%= loggedUser.getUserName() %></td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td><%= loggedUser.getEmail() %></td>
-                    </tr>
-                    <tr>
-                        <th>Phone</th>
-                        <td><%= loggedUser.getPhoneNo() %></td>
-                    </tr>
-                    <tr>
-                        <th>Role</th>
-                        <td>
-                            <%= loggedUser.getRoleID() == 1 ? "Admin" : "User" %> <!-- Assuming 1 is for Admin, you can customize based on your RoleID -->
-                        </td>
-                    </tr>
-                </table>
+            <div>
+                <h4>Prioritize Tasks</h4>
+                <p>Focus on high-priority tasks first to ensure efficiency.</p>
             </div>
         </div>
     </div>
@@ -219,7 +334,7 @@
 
 <!-- Footer -->
 <footer>
-    <p>&copy; 2025 DoTask. All rights reserved. | <a href="#">Privacy Policy</a></p>
+      <p>&copy; 2025 DoTask. All Rights Reserved. | <a href="about-us.jsp">About Us</a> | <a href="contact-us.jsp">Contact Us</a></p>
 </footer>
 
 </body>

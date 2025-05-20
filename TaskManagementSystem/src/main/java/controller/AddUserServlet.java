@@ -28,13 +28,10 @@ public class AddUserServlet extends HttpServlet {
         boolean isAdded = userDAO.registerUser(userName, email, password, phoneNo, roleID);
 
         if (isAdded) {
-            request.setAttribute("successMessage", "User added successfully.");
-            response.sendRedirect("view/manage-users.jsp"); 
+            response.sendRedirect("view/manage-users.jsp"); // Success - redirect to manage users
         } else {
             request.setAttribute("errorMessage", "Failed to add user. Email might already exist.");
+            request.getRequestDispatcher("/view/add-user.jsp").forward(request, response); // Forward back to form with error
         }
-
-        // Forward back to the add-user.jsp page
-        request.getRequestDispatcher("/view/add-user.jsp").forward(request, response);
     }
 }

@@ -1,9 +1,11 @@
 package dao;
 
 import model.Task;
+
+
 import model.User;
 import util.DBUtil;
-
+import model.UserTask;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,5 +154,51 @@ public class TaskDAO {
         return list;
     }
 
-   
-}
+    public static boolean addTask(Task task) {
+        String sql = "INSERT INTO Task (TaskName, TaskDescription, Status, DueDate, UserID, CategoryID) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, task.getTaskName());
+            stmt.setString(2, task.getTaskDescription());
+            stmt.setString(3, task.getStatus());
+            stmt.setDate(4, task.getDueDate());
+            stmt.setInt(5, task.getUserID());
+            stmt.setInt(6, task.getCategoryID());
+
+            return stmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to add task: " + e.getMessage());
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+    
+    public static boolean addTaskUser(UserTask user_task) {
+    	String sql = "INSERT INTO Task (UserID, TaskID) VALUES (?, ?)";
+    	try (Connection conn = DBUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+             
+               stmt.setInt(5, user_task.getUserID());
+               stmt.setInt(6, user_task.getTaskID());
+
+               return stmt.executeUpdate() > 0;
+           } catch (Exception e) {
+               e.printStackTrace();
+               e.printStackTrace();
+
+           }
+           return false;
+       }
+    
+
+
+       
+    }
+    
+
+ 
+

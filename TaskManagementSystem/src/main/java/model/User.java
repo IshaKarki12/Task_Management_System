@@ -8,7 +8,6 @@ public class User {
     private String email;
     private String password;
     private String phoneNo;
-    private byte[] profileImage;
     private int roleID;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -54,13 +53,7 @@ public class User {
         this.phoneNo = phoneNo;
     }
 
-    public byte[] getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
-    }
+   
 
     public int getRoleID() {
         return roleID;
@@ -86,8 +79,7 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-	public void setImageContentType(String string) {
-		// TODO Auto-generated method stub
+	
 		
-	}
 }
+

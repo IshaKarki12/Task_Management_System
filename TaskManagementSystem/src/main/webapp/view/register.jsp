@@ -15,12 +15,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     /* ─── HEADER ───────────────────────────────────────────────── */
     header {
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 20px; left: 0; right: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -56,78 +58,127 @@
 
     /* ─── FORM ─────────────────────────────────────────────────── */
     .form-container {
-       margin-top: 60px; /* push below header */
-      background-color: #ffffff;
       width: 100%;
-      max-width: 420px;
-      padding: 20px 25px;
+      max-width: 500px;
+      background-color: #ffffff;
+      padding: 30px 40px;
       border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       text-align: center;
       transition: transform .3s ease, box-shadow .3s ease;
     }
     .form-container:hover {
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
       transform: translateY(-3px);
     }
 
     h2 {
-      font-size: 22px; font-weight: 700;
-      margin-bottom: 18px; color: #222;
+      font-size: 26px; font-weight: 700;
+      margin-bottom: 20px;
+      color: #222;
     }
-    .form-group { margin-bottom: 15px; text-align: left; }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
     label {
-      font-size: 13px; color: #444; font-weight: 500;
-      display: block; margin-bottom: 6px;
+      font-size: 14px;
+      color: #444;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
     }
+
     input[type="text"],
     input[type="email"],
-    input[type="password"],
-    input[type="file"],
-    select {
-      width: 100%; padding: 10px 14px; font-size: 14px;
-      color: #333; border: 1px solid #ccc; border-radius: 5px;
-      background-color: #f9f9f9; transition: border-color .3s ease;
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #333;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: border-color .3s ease;
     }
-    input:focus {
-      border-color: #007bff; background-color: #fff; outline: none;
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #007bff;
+      background-color: #fff;
+      outline: none;
     }
+
     input[type="submit"] {
-      background-color: #007bff; color: #fff;
-      font-size: 15px; padding: 12px;
-      border: none; border-radius: 5px;
-      width: 100%; cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
       transition: background-color .3s ease;
     }
+
     input[type="submit"]:hover {
       background-color: #0056b3;
     }
 
     .error-message {
-      color: #e74c3c; font-size: 13px;
-      margin-bottom: 15px; text-align: left;
+      color: #e74c3c;
+      font-size: 14px;
+      margin-bottom: 15px;
+      text-align: left;
     }
+
     .bottom-link {
-      margin-top: 20px; font-size: 13px;
-      color: #555; text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
     }
+
     .bottom-link a {
-      color: #007bff; text-decoration: none;
+      color: #007bff;
+      text-decoration: none;
     }
-    .bottom-link a:hover { text-decoration: underline; }
+
+    .bottom-link a:hover {
+      text-decoration: underline;
+    }
 
     @media screen and (max-width: 480px) {
       header {
         flex-direction: column;
         padding: 15px 20px;
       }
-      .logo img { height: 50px; }
-      .logo span { font-size: 24px; }
-      .top-right-link { margin-top: 10px; }
-      .form-container { margin-top: 100px; padding: 18px; }
-      h2 { font-size: 20px; }
-      input[type="submit"] { padding: 10px; font-size: 14px; }
-      .top-right-link, .bottom-link { font-size: 12px; }
+      .logo img {
+        height: 50px;
+      }
+      .logo span {
+        font-size: 24px;
+      }
+      .top-right-link {
+        margin-top: 10px;
+      }
+      .form-container {
+        margin-top: 100px;
+        padding: 20px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+      input[type="submit"] {
+        padding: 12px;
+        font-size: 15px;
+      }
+      .top-right-link, .bottom-link {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -153,7 +204,7 @@
       <div class="error-message"><%= error %></div>
     <% } %>
 
-    <form action="../RegisterServlet" method="post" >
+    <form action="../RegisterServlet" method="post">
       <div class="form-group">
         <label for="userName">Username:</label>
         <input type="text" name="userName" required placeholder="Choose a username">
@@ -170,17 +221,8 @@
         <label for="phoneNo">Phone Number:</label>
         <input type="text" name="phoneNo" pattern="[0-9]{10}" required placeholder="Enter your phone number">
       </div>
-      <div class="form-group">
-        <label for="roleID">Role:</label>
-        <select name="roleID" required>
-         <!--   <option value="1">Admin</option>   -->
-          <option value="2">User</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="profileImage">Upload Profile Image:</label>
-        <input type="file" name="profileImage" accept="image/*">
-      </div>
+      <!-- Removed role dropdown; pre-set role to 'User' -->
+      <input type="hidden" name="roleID" value="2"> <!-- User role ID -->
       <div class="form-group">
         <input type="submit" value="Register">
       </div>
